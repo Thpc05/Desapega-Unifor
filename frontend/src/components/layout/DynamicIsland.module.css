@@ -1,0 +1,53 @@
+.island {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+}
+
+/* item = 2 andares (bloco + texto) */
+.item {
+  width: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 2px 5px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background 0.12s, color 0.12s;
+}
+.item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+/* andar 1: o bloco (sempre quadrado, pixelado) */
+.block {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  image-rendering: pixelated;
+  display: block;
+}
+
+/* andar 2: o texto */
+.label {
+  font-size: 0.56rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+/* item ativo: fundo verde grama + texto escuro */
+.active,
+.active:hover {
+  background: var(--green);
+  color: var(--text-on-accent);
+  border-color: var(--border);
+}

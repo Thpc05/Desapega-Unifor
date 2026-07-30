@@ -1,0 +1,19 @@
+.price {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: var(--emerald);
+}
+.gem {
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+}
+.donation {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: var(--cyan);
+}

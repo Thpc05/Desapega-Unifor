@@ -1,0 +1,19 @@
+/* PANEL = superfície-base (card/container/painel): sólida + bisel sutil + retos. */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  box-shadow:
+    inset 0 2px 0 var(--bevel-light),
+    inset 0 -2px 0 var(--bevel-dark),
+    var(--shadow);
+}
+.elevated { background: var(--surface-2); }
+.padded { padding: var(--sp-4); }
+.interactive {
+  cursor: pointer;
+  transition: filter 0.12s ease, transform 0.06s ease;
+}
+.interactive:hover { filter: brightness(1.12); }
+.interactive:active { transform: translateY(1px); }

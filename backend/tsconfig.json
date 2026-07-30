@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    /* Qual versão de JavaScript o TypeScript vai gerar no final */
+    "target": "ES2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+
+    /* Onde o código-fonte (.ts) está e onde o compilado (.js) vai parar */
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    /* Rigor de tipos: liga TODAS as checagens de segurança do TypeScript.
+       É o que te obriga (e ajuda) a tratar null, tipos errados, etc. */
+    "strict": true,
+
+    /* Permite importar libs CommonJS (como Express) com "import x from" */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Acelera o build ignorando checagem de tipos dentro do node_modules */
+    "skipLibCheck": true,
+
+    /* Deixa o TS entender recursos modernos do Node (fs, path, etc.) */
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

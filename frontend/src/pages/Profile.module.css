@@ -1,0 +1,110 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+}
+.top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.avatar {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  font-size: 1.7rem;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.ident {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.name {
+  font-size: 1.25rem;
+}
+.course {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+}
+.bio {
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.stat {
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.statNum {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--emerald);
+}
+.statLabel {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.sectionTitle {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.review {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.reviewTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.reviewer {
+  font-weight: 700;
+}
+.stars {
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+.comment {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (min-width: 560px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  }
+}

@@ -1,0 +1,9 @@
+.shell {
+  min-height: 100vh;
+}
+.main {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 16px 110px; /* espaço embaixo p/ a dynamic island */
+}

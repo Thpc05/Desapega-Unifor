@@ -1,0 +1,39 @@
+/**
+ * DESIGN TOKENS — mistura: UI moderna + pixelado + Minecraft.
+ * Superfícies escuras sólidas + bisel sutil + fonte Monocraft em TUDO + acentos
+ * de textura de bloco (em botões/ícones). Cantos retos. Moeda = esmeraldas.
+ */
+:root {
+  /* Fundo e superfícies */
+  --bg: #17130d;
+  --surface: #26201a;
+  --surface-2: #322a20;
+  --surface-3: #3f362a;
+
+  /* Bordas e relevo */
+  --border: rgba(0, 0, 0, 0.5);
+  --bevel-light: rgba(255, 255, 255, 0.1);
+  --bevel-dark: rgba(0, 0, 0, 0.34);
+  --radius: 0px;
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+
+  /* Acentos (cores do Minecraft) */
+  --green: #6cbf3f;
+  --green-dark: #4e9e2d;
+  --gold: #ffcf3f;
+  --emerald: #4fe089;   /* verde-esmeralda (moeda) */
+  --cyan: #4fd6d6;
+  --red: #e0402e;
+
+  /* Texto */
+  --text: #efe9df;
+  --text-muted: #b3a88f;
+  --text-on-accent: #17130d;
+
+  /* Fonte: Monocraft (Minecraft, com acentos) em tudo. 400 corpo · 700 label · 900 título. */
+  --font-body: 'Monocraft', 'Courier New', monospace;
+
+  /* Espaçamento */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px;
+  --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
+}

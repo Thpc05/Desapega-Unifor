@@ -1,0 +1,46 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.control {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4);
+  padding: 10px 12px;
+  width: 100%;
+}
+.control::placeholder { color: var(--text-muted); }
+.control:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(108, 191, 63, 0.3);
+}
+select.control { cursor: pointer; }
+textarea.control { resize: vertical; min-height: 96px; line-height: 1.5; }
+
+/* estado inválido (validação local) */
+.control.invalid {
+  border-color: var(--red);
+}
+.control.invalid:focus {
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(224, 64, 46, 0.3);
+}
+.error {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--red);
+}
+.hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}

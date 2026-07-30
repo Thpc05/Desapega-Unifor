@@ -1,0 +1,31 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 44px 16px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* "spinner" pixelado: um bloco de esmeralda pulsando */
+.spinner {
+  width: 34px;
+  height: 34px;
+  image-rendering: pixelated;
+  animation: pulse 0.9s steps(2, end) infinite;
+}
+@keyframes pulse {
+  0% { opacity: 0.35; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+.errIcon {
+  width: 34px;
+  height: 34px;
+  image-rendering: pixelated;
+}
+.errMsg {
+  color: var(--text);
+  font-weight: 700;
+}
