@@ -6,6 +6,7 @@
   text-decoration: none;
   color: inherit;
   height: 100%;
+  min-width: 0; /* deixa o card encolher junto com a coluna do grid */
 }
 
 .imgWrap {

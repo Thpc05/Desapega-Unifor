@@ -26,6 +26,15 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  /* impede que qualquer conteúdo largo estoure a largura da tela e force o
+     navegador a dar zoom-out (o que quebra o position:fixed em celulares
+     estreitos como o Fold fechado). 'clip' não cria scroll container. */
+  overflow-x: clip;
+  max-width: 100%;
+}
+
 body {
   font-family: var(--font-body);
   font-size: 15px;
