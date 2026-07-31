@@ -8,16 +8,25 @@
   color: var(--text-muted);
 }
 
-/* "spinner" pixelado: um bloco de esmeralda pulsando */
-.spinner {
-  width: 34px;
-  height: 34px;
-  image-rendering: pixelated;
-  animation: pulse 0.9s steps(2, end) infinite;
+/* loading: uma fornalha "acendendo" (front + front_on piscando) */
+.furnace {
+  position: relative;
+  width: 40px;
+  height: 40px;
 }
-@keyframes pulse {
-  0% { opacity: 0.35; transform: scale(0.9); }
-  100% { opacity: 1; transform: scale(1.05); }
+.furnace img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+.furnaceOn {
+  animation: furnaceFlicker 0.9s steps(1) infinite;
+}
+@keyframes furnaceFlicker {
+  0%, 45% { opacity: 0; }
+  50%, 100% { opacity: 1; }
 }
 
 .errIcon {

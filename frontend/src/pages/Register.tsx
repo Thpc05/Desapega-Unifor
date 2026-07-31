@@ -57,7 +57,7 @@ export function Register() {
     <div className={styles.wrap}>
       <Panel elevated className={styles.card}>
         <div className={styles.head}>
-          <img className={styles.logo} src="/emerald.png" alt="" />
+          <img className={styles.logo} src="/villager-face.png" alt="" />
           <h1>Criar conta</h1>
           <span className={styles.sub}>Entre para a economia circular do campus.</span>
         </div>
@@ -99,7 +99,12 @@ export function Register() {
               <Input type="number" min={0} max={10} placeholder="3" {...form.bind('semester')} />
             </Field>
           </div>
-          {serverError && <span className={styles.serverError}>{serverError}</span>}
+          {serverError && (
+            <span className={styles.serverError}>
+              <img className={styles.serverErrorIcon} src="/warning.png" alt="" />
+              {serverError}
+            </span>
+          )}
           <Button type="submit" size="lg" fullWidth loading={submitting}>
             Cadastrar
           </Button>

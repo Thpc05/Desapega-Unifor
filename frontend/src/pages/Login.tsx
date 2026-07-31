@@ -43,7 +43,7 @@ export function Login() {
     <div className={styles.wrap}>
       <Panel elevated className={styles.card}>
         <div className={styles.head}>
-          <img className={styles.logo} src="/emerald.png" alt="" />
+          <img className={styles.logo} src="/villager-face.png" alt="" />
           <h1>Entrar</h1>
           <span className={styles.sub}>Use sua matrícula e senha da Unifor.</span>
         </div>
@@ -55,7 +55,12 @@ export function Login() {
           <Field label="Senha" error={form.errors.password}>
             <Input type="password" placeholder="••••••••" {...form.bind('password')} />
           </Field>
-          {serverError && <span className={styles.serverError}>{serverError}</span>}
+          {serverError && (
+            <span className={styles.serverError}>
+              <img className={styles.serverErrorIcon} src="/warning.png" alt="" />
+              {serverError}
+            </span>
+          )}
           <Button type="submit" size="lg" fullWidth loading={submitting}>
             Entrar
           </Button>

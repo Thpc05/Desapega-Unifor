@@ -32,10 +32,7 @@ export function ItemCard({ item }: { item: Item }) {
         <div className={styles.foot}>
           <span className={styles.seller}>por {owner?.name ?? '—'}</span>
         </div>
-      </div>
-
-      {/* Barra de XP do vendedor, estilo Minecraft, colada na borda inferior */}
-      <div className={styles.meterSlot}>
+        {/* Barra de XP do vendedor (nível logo acima) */}
         <XpMeter xp={owner?.xp ?? 0} />
       </div>
     </Panel>

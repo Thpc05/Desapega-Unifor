@@ -23,7 +23,7 @@ export const CATEGORY_TEXTURE: Record<ItemCategory, string> = {
   StudyMaterial: 'bookshelf',
   Electronics: 'lapis_block',
   Peripherals: 'iron_block',
-  Apparel: 'white_wool',
+  Apparel: 'leather_chestplate',
   Other: 'cobblestone',
 };
 

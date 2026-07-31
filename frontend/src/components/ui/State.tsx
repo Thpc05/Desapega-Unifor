@@ -5,7 +5,10 @@ import styles from './State.module.css';
 export function Loading({ label = 'Carregando…' }: { label?: string }) {
   return (
     <div className={styles.wrap} role="status" aria-live="polite">
-      <img className={styles.spinner} src="/emerald_block.png" alt="" />
+      <span className={styles.furnace} aria-hidden="true">
+        <img src="/furnace_front.png" alt="" />
+        <img className={styles.furnaceOn} src="/furnace_front_on.png" alt="" />
+      </span>
       <span>{label}</span>
     </div>
   );
@@ -15,7 +18,7 @@ export function Loading({ label = 'Carregando…' }: { label?: string }) {
 export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
   return (
     <div className={styles.wrap} role="alert">
-      <img className={styles.errIcon} src="/redstone_block.png" alt="" onError={hideBrokenImg} />
+      <img className={styles.errIcon} src="/error.png" alt="" onError={hideBrokenImg} />
       <span className={styles.errMsg}>Algo deu errado</span>
       <span>{message}</span>
       {onRetry && (

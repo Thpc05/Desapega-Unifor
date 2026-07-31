@@ -52,8 +52,17 @@
   color: var(--red);
   font-weight: 700;
   font-size: 0.86rem;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
   border: 1px solid var(--red);
   background: rgba(224, 64, 46, 0.12);
   padding: 8px 10px;
+}
+.serverErrorIcon {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
 }

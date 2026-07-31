@@ -4,7 +4,7 @@ import { Panel } from '../components/ui/Panel';
 import { Button } from '../components/ui/Button';
 import { Price } from '../components/ui/Price';
 import { CategoryIcon } from '../components/ui/CategoryIcon';
-import { XpBadge } from '../components/ui/XpBar';
+import { XpMeter } from '../components/ui/XpBar';
 import { Icon } from '../components/ui/Icon';
 import { Avatar } from '../components/ui/Avatar';
 import { ImageCarousel } from '../components/item/ImageCarousel';
@@ -79,19 +79,19 @@ export function ItemDetail() {
 
           {owner && (
             <Panel as={Link} to={`/perfil/${owner._id}`} interactive className={styles.seller}>
-              <Avatar url={owner.avatarUrl} name={owner.name} size={44} />
-              <span className={styles.sellerMeta}>
-                <span className={styles.sellerName}>{owner.name}</span>
-                {owner.course && (
-                  <span className={styles.sellerSub}>
-                    {owner.course}
-                    {owner.semester ? ` · ${owner.semester}º sem.` : ''}
-                  </span>
-                )}
-              </span>
-              <span style={{ marginLeft: 'auto' }}>
-                <XpBadge xp={owner.xp} />
-              </span>
+              <div className={styles.sellerRow}>
+                <Avatar url={owner.avatarUrl} name={owner.name} size={44} />
+                <span className={styles.sellerMeta}>
+                  <span className={styles.sellerName}>{owner.name}</span>
+                  {owner.course && (
+                    <span className={styles.sellerSub}>
+                      {owner.course}
+                      {owner.semester ? ` · ${owner.semester}º sem.` : ''}
+                    </span>
+                  )}
+                </span>
+              </div>
+              <XpMeter xp={owner.xp} />
             </Panel>
           )}
 

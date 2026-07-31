@@ -72,8 +72,3 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* barra de XP full-bleed: cancela o padding (8px) do card e cola nas bordas */
-.meterSlot {
-  margin: 6px -8px -8px;
-}

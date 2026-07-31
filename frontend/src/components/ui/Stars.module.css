@@ -1,28 +1,38 @@
 .stars {
   display: inline-flex;
-  gap: 2px;
-  color: var(--gold);
+  gap: 3px;
+  align-items: center;
   line-height: 1;
 }
-.star {
-  font-size: 1rem;
+.heart {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+  display: block;
 }
-/* modo input: estrelas clicáveis, maiores */
+/* coração "vazio" = apagado (sem preencher) */
+.empty {
+  opacity: 0.28;
+  filter: grayscale(0.5);
+}
+
+/* modo input: corações clicáveis, maiores */
 .input {
-  gap: 4px;
+  gap: 6px;
 }
-.input .star {
-  font-size: 1.9rem;
-  cursor: pointer;
+.heartBtn {
   background: none;
   border: none;
   padding: 0;
-  color: var(--text-muted);
-  transition: transform 0.08s, color 0.08s;
+  cursor: pointer;
+  transition: transform 0.08s;
 }
-.input .on {
-  color: var(--gold);
+.heartBtn:hover {
+  transform: scale(1.2);
 }
-.input .star:hover {
-  transform: scale(1.15);
+.heartBig {
+  width: 30px;
+  height: 30px;
+  image-rendering: pixelated;
+  display: block;
 }

@@ -3,7 +3,6 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Panel } from '../components/ui/Panel';
 import { Button } from '../components/ui/Button';
 import { XpMeter } from '../components/ui/XpBar';
-import { computeLevel } from '../utils/level';
 import { ItemCard } from '../components/item/ItemCard';
 import { ReviewCard } from '../components/item/ReviewCard';
 import { Loading, ErrorState } from '../components/ui/State';
@@ -99,12 +98,7 @@ function ProfileView({
         </div>
         {avatarError && <ErrorState message={avatarError} />}
         {profile.bio && <p className={styles.bio}>{profile.bio}</p>}
-        <div className={styles.xpWrap}>
-          <span className={styles.xpCaption}>
-            Nível {computeLevel(profile.xp)} · {profile.xp} XP
-          </span>
-          <XpMeter xp={profile.xp} />
-        </div>
+        <XpMeter xp={profile.xp} detail />
         {isMe && (
           <div className={styles.meActions}>
             <Button variant="plain" size="sm" onClick={() => navigate('/meus')}>

@@ -13,16 +13,22 @@ export function XpBadge({ xp }: { xp: number }) {
 }
 
 /**
- * Barra de XP estilo Minecraft (sprites do jogo) com o NÍVEL no meio.
- * Usada colada na borda inferior do card de anúncio.
+ * Barra de XP estilo Minecraft (sprites do jogo) com o NÍVEL logo ACIMA da barra.
+ * `detail` mostra também o total de XP (usado no perfil).
  */
-export function XpMeter({ xp }: { xp: number }) {
+export function XpMeter({ xp, detail = false }: { xp: number; detail?: boolean }) {
   const level = computeLevel(xp);
   const pct = Math.round(xpProgress(xp) * 100);
   return (
-    <div className={styles.meter} title={`Nível ${level} · ${xp} XP`}>
-      <div className={styles.meterFill} style={{ width: `${pct}%` }} />
-      <span className={styles.meterLevel}>{level}</span>
+    <div className={styles.meterWrap} title={`Nível ${level} · ${xp} XP`}>
+      <span className={styles.meterLabel}>
+        <img className={styles.xpIcon} src="/experience_bottle.png" alt="" aria-hidden="true" />
+        Nível {level}
+        {detail ? ` · ${xp} XP` : ''}
+      </span>
+      <div className={styles.meter}>
+        <div className={styles.meterFill} style={{ width: `${pct}%` }} />
+      </div>
     </div>
   );
 }

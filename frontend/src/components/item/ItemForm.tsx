@@ -137,7 +137,7 @@ export function ItemForm({
                     onClick={() => removeExisting(img.publicId)}
                     aria-label="Remover foto"
                   >
-                    ✕
+                    <img src="/cross_button.png" alt="" />
                   </button>
                 </div>
               ))}
@@ -150,7 +150,7 @@ export function ItemForm({
                     onClick={() => removeFile(i)}
                     aria-label="Remover foto"
                   >
-                    ✕
+                    <img src="/cross_button.png" alt="" />
                   </button>
                 </div>
               ))}

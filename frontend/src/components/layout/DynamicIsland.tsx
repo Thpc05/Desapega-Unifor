@@ -8,9 +8,9 @@ import styles from './DynamicIsland.module.css';
  */
 const LINKS = [
   { to: '/', label: 'Home', block: 'grass_block_side', end: true },
-  { to: '/chat', label: 'Chat', block: 'writable_book', end: false },
+  { to: '/chat', label: 'Chat', block: 'social_interactions', end: false },
   { to: '/meus', label: 'Anúncios', block: 'bookshelf', end: false },
-  { to: '/perfil/me', label: 'Perfil', block: 'observer', end: false },
+  { to: '/perfil/me', label: 'Perfil', block: 'villager-face', end: false },
 ];
 
 export function DynamicIsland() {
