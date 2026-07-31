@@ -5,6 +5,7 @@ import type { PublicProfile, User } from '../types';
 export interface UpdateMeInput {
   name?: string;
   bio?: string;
+  avatarUrl?: string;
   email?: string;
   phone?: string;
   course?: string;

@@ -16,6 +16,7 @@ export interface IUser {
   _id: string; // = matrícula
   name: string;
   bio?: string;
+  avatarUrl?: string; // foto de perfil (URL do Cloudinary)
   email: string;
   phone: string;
   passwordHash: string;
@@ -42,6 +43,7 @@ const userSchema = new Schema<IUser>(
     _id: { type: String, required: true, trim: true },
     name: { type: String, required: true, trim: true },
     bio: { type: String, trim: true },
+    avatarUrl: { type: String, trim: true },
     email: { type: String, required: true, trim: true, lowercase: true },
     phone: { type: String, required: true, trim: true },
     passwordHash: { type: String, required: true, select: false },

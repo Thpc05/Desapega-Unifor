@@ -17,6 +17,7 @@ interface AuthContextValue {
   login: (matricula: string, password: string) => Promise<void>;
   register: (input: RegisterInput) => Promise<void>;
   logout: () => void;
+  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -63,9 +64,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   }
 
+  /** Re-busca o usuário logado (ex.: após atualizar perfil/foto). */
+  async function refreshUser() {
+    if (!getToken()) return;
+    const fresh = await authApi.me();
+    setUser(fresh);
+  }
+
   return (
     <AuthContext.Provider
-      value={{ user, loading, isLoggedIn: Boolean(user), login, register, logout }}
+      value={{ user, loading, isLoggedIn: Boolean(user), login, register, logout, refreshUser }}
     >
       {children}
     </AuthContext.Provider>

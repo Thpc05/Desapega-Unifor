@@ -50,6 +50,7 @@ export interface User {
   matricula: string;
   name: string;
   bio?: string;
+  avatarUrl?: string;
   email?: string;
   phone?: string;
   course?: string;
@@ -74,6 +75,7 @@ export interface PublicProfile {
   matricula: string;
   name: string;
   bio?: string;
+  avatarUrl?: string;
   course?: string;
   semester?: number;
   phone?: string;

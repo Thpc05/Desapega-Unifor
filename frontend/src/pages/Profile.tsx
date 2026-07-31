@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Panel } from '../components/ui/Panel';
 import { Button } from '../components/ui/Button';
@@ -8,6 +9,9 @@ import { ReviewCard } from '../components/item/ReviewCard';
 import { Loading, ErrorState } from '../components/ui/State';
 import { useItems, useProfile } from '../hooks/queries';
 import { useAuth } from '../context/AuthContext';
+import { imagesApi } from '../api/images.api';
+import { usersApi } from '../api/users.api';
+import { apiErrorMessage } from '../api/client';
 import styles from './Profile.module.css';
 
 export function Profile() {
@@ -31,18 +35,56 @@ function ProfileView({
   onLogout: () => void;
 }) {
   const navigate = useNavigate();
+  const { refreshUser } = useAuth();
   const { data: profile, loading, error, refetch } = useProfile(matricula);
   const { data: items } = useItems({ owner: matricula });
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [avatarBusy, setAvatarBusy] = useState(false);
+  const [avatarError, setAvatarError] = useState<string | null>(null);
+
+  // Troca de foto: sobe pro Cloudinary e salva a URL no perfil.
+  async function onAvatarPick(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    setAvatarBusy(true);
+    setAvatarError(null);
+    try {
+      const [img] = await imagesApi.upload([file]);
+      await usersApi.updateMe({ avatarUrl: img.url });
+      await refreshUser();
+      refetch();
+    } catch (err) {
+      setAvatarError(apiErrorMessage(err));
+    } finally {
+      setAvatarBusy(false);
+    }
+  }
 
   if (loading) return <Loading label="Carregando perfil…" />;
   if (error) return <ErrorState message={error} onRetry={refetch} />;
   if (!profile) return null;
 
+  const avatarInner = profile.avatarUrl ? (
+    <img className={styles.avatarImg} src={profile.avatarUrl} alt={profile.name} />
+  ) : (
+    profile.name.charAt(0)
+  );
+
   return (
     <div className={styles.page}>
       <Panel elevated className={styles.header}>
         <div className={styles.top}>
-          <span className={styles.avatar}>{profile.name.charAt(0)}</span>
+          {isMe ? (
+            <button type="button" className={styles.avatar} onClick={() => fileRef.current?.click()} title="Trocar foto">
+              {avatarInner}
+              <span className={styles.avatarEdit}>📷</span>
+              {avatarBusy && <span className={styles.avatarBusy}>…</span>}
+              <input ref={fileRef} type="file" accept="image/*" hidden onChange={onAvatarPick} />
+            </button>
+          ) : (
+            <span className={styles.avatar}>{avatarInner}</span>
+          )}
           <div className={styles.ident}>
             <h1 className={styles.name}>
               {profile.name} {isMe && <small>(você)</small>}
@@ -55,6 +97,7 @@ function ProfileView({
             )}
           </div>
         </div>
+        {avatarError && <ErrorState message={avatarError} />}
         {profile.bio && <p className={styles.bio}>{profile.bio}</p>}
         <div className={styles.xpWrap}>
           <span className={styles.xpCaption}>

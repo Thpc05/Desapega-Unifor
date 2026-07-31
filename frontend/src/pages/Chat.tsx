@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Panel } from '../components/ui/Panel';
 import { Button } from '../components/ui/Button';
@@ -6,9 +6,8 @@ import { Input } from '../components/ui/Field';
 import { Icon } from '../components/ui/Icon';
 import { Loading, ErrorState } from '../components/ui/State';
 import { useMessages, useInbox } from '../hooks/queries';
+import { useChatSocket } from '../hooks/useChatSocket';
 import { useAuth } from '../context/AuthContext';
-import { conversationsApi } from '../api/conversations.api';
-import { apiErrorMessage } from '../api/client';
 import type { Message, UserRef } from '../types';
 import styles from './Chat.module.css';
 
@@ -27,11 +26,17 @@ export function Chat() {
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState('');
-  const [sending, setSending] = useState(false);
-  const [sendError, setSendError] = useState<string | null>(null);
   const threadRef = useRef<HTMLDivElement>(null);
 
-  // Quando o histórico carrega, semeia a lista local.
+  // Adiciona uma mensagem evitando duplicar (mesmo _id).
+  const addMessage = useCallback((m: Message) => {
+    setMessages((prev) => (prev.some((x) => x._id === m._id) ? prev : [...prev, m]));
+  }, []);
+
+  // Tempo real: entra na sala e recebe as mensagens novas (inclusive as minhas).
+  const { sendMessage, connected, error: socketError } = useChatSocket(id, addMessage);
+
+  // Quando o histórico (REST) carrega, semeia a lista local.
   useEffect(() => {
     if (data) setMessages(data);
   }, [data]);
@@ -53,21 +58,13 @@ export function Chat() {
       : 'Conversa';
   const itemTitle = convo && typeof convo.item === 'object' ? convo.item.title : '';
 
-  async function send(e: React.FormEvent) {
+  function send(e: React.FormEvent) {
     e.preventDefault();
     const t = text.trim();
-    if (!t || !id) return;
-    setSending(true);
-    setSendError(null);
-    try {
-      const msg = await conversationsApi.sendMessage(id, t);
-      setMessages((prev) => [...prev, msg]);
-      setText('');
-    } catch (err) {
-      setSendError(apiErrorMessage(err));
-    } finally {
-      setSending(false);
-    }
+    if (!t) return;
+    // Envia pelo socket; a mensagem volta via 'message:new' e é adicionada lá.
+    sendMessage(t);
+    setText('');
   }
 
   if (loading) return <Loading label="Abrindo conversa…" />;
@@ -88,6 +85,10 @@ export function Chat() {
           <span className={styles.hName}>{otherName}</span>
           {itemTitle && <span className={styles.hItem}>{itemTitle}</span>}
         </div>
+        <span
+          className={`${styles.dot} ${connected ? styles.online : styles.offline}`}
+          title={connected ? 'Conectado (tempo real)' : 'Conectando…'}
+        />
       </Panel>
 
       <div className={styles.thread} ref={threadRef}>
@@ -102,7 +103,7 @@ export function Chat() {
         })}
       </div>
 
-      {sendError && <ErrorState message={sendError} />}
+      {socketError && <ErrorState message={socketError} />}
 
       <form className={styles.composer} onSubmit={send}>
         <Input
@@ -111,7 +112,7 @@ export function Chat() {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <Button type="submit" texture="cobblestone" loading={sending}>
+        <Button type="submit" texture="cobblestone">
           Enviar
         </Button>
       </form>

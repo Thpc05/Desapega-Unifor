@@ -9,6 +9,7 @@ import { computeLevel } from '../utils/xp';
 interface UpdateMeInput {
   name?: string;
   bio?: string;
+  avatarUrl?: string;
   email?: string;
   phone?: string;
   course?: IUser['course'];
@@ -35,6 +36,7 @@ export const userService = {
       matricula: user.id, // = _id
       name: user.name,
       bio: user.bio,
+      avatarUrl: user.avatarUrl,
       course: user.course,
       semester: user.semester,
       phone: user.phone,

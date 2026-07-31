@@ -10,6 +10,7 @@ export const updateMeSchema = z.object({
   body: z.object({
     name: z.string().min(1).optional(),
     bio: z.string().max(300).optional(),
+    avatarUrl: z.string().url('Invalid image URL').optional(),
     email: z.string().email('Invalid email').optional(),
     phone: z.string().min(1).optional(),
     course: z.enum(UNIFOR_COURSES).optional(),

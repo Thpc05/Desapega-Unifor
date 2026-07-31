@@ -33,6 +33,21 @@
   font-size: 0.76rem;
   color: var(--emerald);
 }
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-left: auto;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.online {
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+}
+.offline {
+  background: var(--text-muted);
+}
 
 .thread {
   flex: 1;
