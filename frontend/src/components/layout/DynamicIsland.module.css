@@ -20,12 +20,11 @@
   padding: 6px 2px 5px;
   color: var(--text-muted);
   text-decoration: none;
-  border: 1px solid transparent;
-  transition: background 0.12s, color 0.12s;
+  transition: transform 0.12s ease, color 0.12s;
 }
 .item:hover {
-  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
+  transform: translateY(-2px);
 }
 
 /* andar 1: o bloco (sempre quadrado, pixelado) */
@@ -44,10 +43,19 @@
   line-height: 1;
 }
 
-/* item ativo: fundo verde grama + texto escuro */
+/* item ativo: sobe 5px (sem fundo verde) + texto em destaque e sublinhado */
 .active,
 .active:hover {
-  background: var(--green);
-  color: var(--text-on-accent);
-  border-color: var(--border);
+  transform: translateY(-5px);
+  color: var(--text);
+}
+.active .label {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* clique: afunda o item (vence o estado ativo enquanto pressionado) */
+.item:active {
+  transform: translateY(3px);
+  filter: brightness(0.82);
 }

@@ -114,7 +114,7 @@ export function NewItem() {
 
           {serverError && <ErrorState message={serverError} />}
 
-          <Button type="submit" texture="grass_block_side" size="lg" fullWidth loading={submitting}>
+          <Button type="submit" variant="primary" size="lg" fullWidth loading={submitting}>
             Publicar anúncio
           </Button>
         </form>

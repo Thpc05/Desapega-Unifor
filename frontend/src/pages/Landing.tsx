@@ -4,6 +4,8 @@ import { Panel } from '../components/ui/Panel';
 import { Button } from '../components/ui/Button';
 import { ItemCard } from '../components/item/ItemCard';
 import { Loading, ErrorState, EmptyState } from '../components/ui/State';
+import { Icon } from '../components/ui/Icon';
+import { CraftPlus } from '../components/ui/CraftPlus';
 import { useItems } from '../hooks/queries';
 import { CATEGORY_ORDER, CATEGORY_SHORT } from '../constants';
 import type { ItemCategory, ItemType } from '../types';
@@ -16,6 +18,7 @@ export function Landing() {
   const navigate = useNavigate();
   const [cat, setCat] = useState<CatFilter>('all');
   const [type, setType] = useState<TypeFilter>('all');
+  const [q, setQ] = useState('');
 
   // Monta o objeto de filtros que vai pra API (undefined = "sem filtro").
   const filters = useMemo(
@@ -27,6 +30,10 @@ export function Landing() {
   );
   const { data: items, loading, error, refetch } = useItems(filters);
 
+  // Busca por título é client-side (sobre os itens já carregados).
+  const term = q.trim().toLowerCase();
+  const shown = (items ?? []).filter((i) => i.title.toLowerCase().includes(term));
+
   return (
     <div className={styles.page}>
       {/* Hero */}
@@ -37,7 +44,7 @@ export function Landing() {
           esmeraldas, e ajude outro estudante. ⛏
         </p>
         <div className={styles.heroActions}>
-          <Button texture="grass_block_side" onClick={() => navigate('/anunciar')}>
+          <Button variant="plain" icon={<CraftPlus />} onClick={() => navigate('/anunciar')}>
             Anunciar item
           </Button>
           <Button variant="secondary" onClick={() => setType('donation')}>
@@ -48,6 +55,15 @@ export function Landing() {
 
       {/* Filtros */}
       <div className={styles.toolbar}>
+        <div className={styles.search}>
+          <Icon name="search" size={16} style={{ opacity: 0.7 }} />
+          <input
+            className={styles.searchInput}
+            placeholder="Buscar por título..."
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+        </div>
         <div className={styles.filters}>
           <Chip active={type === 'all'} onClick={() => setType('all')}>Tudo</Chip>
           <Chip active={type === 'sale'} onClick={() => setType('sale')}>À venda</Chip>
@@ -68,12 +84,14 @@ export function Landing() {
         <Loading label="Buscando anúncios…" />
       ) : error ? (
         <ErrorState message={error} onRetry={refetch} />
-      ) : items && items.length > 0 ? (
+      ) : shown.length > 0 ? (
         <div className={styles.grid}>
-          {items.map((item) => (
+          {shown.map((item) => (
             <ItemCard key={item._id} item={item} />
           ))}
         </div>
+      ) : term ? (
+        <EmptyState>Nenhum item encontrado para "{q}".</EmptyState>
       ) : (
         <EmptyState>Nenhum item por aqui ainda. Que tal ser o primeiro a anunciar?</EmptyState>
       )}

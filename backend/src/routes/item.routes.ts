@@ -46,6 +46,9 @@ router.delete('/:id', authRequired, validate(itemIdSchema), itemController.remov
 // Concluir negócio (aplica XP + históricos).
 router.post('/:id/conclude', authRequired, validate(concludeItemSchema), itemController.conclude);
 
+// Listar as avaliações de um negócio (público).
+router.get('/:id/reviews', validate(itemIdSchema), reviewController.list);
+
 // Avaliar a contraparte de uma venda concluída.
 router.post('/:id/reviews', authRequired, validate(createReviewSchema), reviewController.create);
 

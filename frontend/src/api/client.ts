@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { translateError } from './errorMessages';
 
 /**
  * CLIENT = uma instância única do axios que TODA a app usa pra falar com a API.
@@ -9,7 +10,8 @@ import axios from 'axios';
  *    Assim o token é anexado num lugar só, e o 401 é tratado num lugar só.
  */
 
-const BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:3333';
+// tira barra(s) no final pra não gerar "https://site//api" ao concatenar.
+const BASE = (import.meta.env.VITE_API_URL ?? 'http://localhost:3333').replace(/\/+$/, '');
 
 export const api = axios.create({
   baseURL: `${BASE}/api`,
@@ -58,12 +60,38 @@ api.interceptors.response.use(
 );
 
 /**
- * Extrai a mensagem de erro que o backend mandou (ou uma genérica).
- * O backend responde erros como { message: '...' } via error.middleware.
+ * Formato dos erros que o backend devolve (error.middleware):
+ *   { error: 'mensagem', issues?: [{ field, error }] }
+ * `issues` só vem em erro de validação (Zod), com o detalhe de cada campo.
+ */
+interface ApiErrorBody {
+  error?: string;
+  issues?: { field: string; error: string }[];
+}
+
+/**
+ * Transforma QUALQUER erro numa mensagem clara e em PT para exibir ao usuário.
+ * Ordem: sem resposta (rede/servidor fora) → detalhe de validação → mensagem de
+ * negócio do backend → fallback pelo status.
  */
 export function apiErrorMessage(error: unknown): string {
-  if (axios.isAxiosError(error)) {
-    return error.response?.data?.message ?? 'Falha na conexão com o servidor';
+  if (!axios.isAxiosError(error)) return 'Erro inesperado';
+
+  // Sem `response` = a requisição não chegou (sem internet, servidor dormindo/fora, CORS).
+  if (!error.response) {
+    return 'Não foi possível conectar ao servidor. Verifique sua conexão e tente de novo.';
   }
-  return 'Erro inesperado';
+
+  const data = error.response.data as ApiErrorBody | undefined;
+
+  // Erro de validação: mostra o(s) detalhe(s) específico(s) de cada campo.
+  if (data?.issues?.length) {
+    return data.issues.map((i) => translateError(i.error)).join(' · ');
+  }
+
+  // Erro de regra de negócio (409/403/404/401): usa a mensagem do backend, traduzida.
+  if (data?.error) return translateError(data.error);
+
+  // Último recurso: identifica pelo código de status.
+  return `Erro ${error.response.status}. Tente novamente.`;
 }

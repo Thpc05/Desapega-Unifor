@@ -44,3 +44,39 @@
     inset 0 -2px 0 rgba(0, 0, 0, 0.25);
   transition: width 0.3s ease;
 }
+
+/* ---- Barra de XP estilo Minecraft (sprites experience_bar_*) ---- */
+/* As sprites são gradiente vertical, então esticar na horizontal é lossless. */
+.meter {
+  position: relative;
+  width: 100%;
+  height: 14px;
+  image-rendering: pixelated;
+  background-image: url('/xp_bar_bg.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.meterFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-image: url('/xp_bar_fill.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  transition: width 0.3s ease;
+}
+/* número do nível centralizado, com contorno escuro (estilo XP do jogo) */
+.meterLevel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #cdff6b;
+  text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000;
+  transform: translateY(-1px);
+}

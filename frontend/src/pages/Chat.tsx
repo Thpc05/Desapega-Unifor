@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Panel } from '../components/ui/Panel';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Field';
+import { Icon } from '../components/ui/Icon';
 import { Loading, ErrorState } from '../components/ui/State';
 import { useMessages, useInbox } from '../hooks/queries';
 import { useAuth } from '../context/AuthContext';
@@ -75,9 +76,13 @@ export function Chat() {
   return (
     <div className={styles.page}>
       <Panel elevated className={styles.header}>
-        <Button variant="ghost" size="sm" onClick={() => navigate('/chat')}>
-          ←
-        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          aria-label="Voltar"
+          icon={<Icon name="page_backward" width={26} height={15} />}
+          onClick={() => navigate('/chat')}
+        />
         <span className={styles.avatar}>{(otherName || '?').charAt(0)}</span>
         <div className={styles.hMeta}>
           <span className={styles.hName}>{otherName}</span>

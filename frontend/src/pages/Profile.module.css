@@ -43,6 +43,21 @@
   color: var(--text-muted);
   line-height: 1.55;
 }
+.xpWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.xpCaption {
+  font-size: 0.82rem;
+  color: var(--emerald);
+  font-weight: 700;
+}
+.meActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
 
 .stats {
   display: grid;

@@ -1,0 +1,28 @@
+.stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--gold);
+  line-height: 1;
+}
+.star {
+  font-size: 1rem;
+}
+/* modo input: estrelas clicáveis, maiores */
+.input {
+  gap: 4px;
+}
+.input .star {
+  font-size: 1.9rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-muted);
+  transition: transform 0.08s, color 0.08s;
+}
+.input .on {
+  color: var(--gold);
+}
+.input .star:hover {
+  transform: scale(1.15);
+}

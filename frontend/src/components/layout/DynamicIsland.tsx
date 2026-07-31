@@ -7,9 +7,8 @@ import styles from './DynamicIsland.module.css';
  * Cada item = 2 andares: (1) o BLOCO que o representa, (2) o rótulo.
  */
 const LINKS = [
-  { to: '/', label: 'Vitrine', block: 'grass_block_side', end: true },
-  { to: '/chat', label: 'Chat', block: 'book', end: false },
-  { to: '/anunciar', label: 'Anunciar', block: 'crafting_table', end: false },
+  { to: '/', label: 'Home', block: 'grass_block_side', end: true },
+  { to: '/chat', label: 'Chat', block: 'writable_book', end: false },
   { to: '/meus', label: 'Anúncios', block: 'bookshelf', end: false },
   { to: '/perfil/me', label: 'Perfil', block: 'observer', end: false },
 ];

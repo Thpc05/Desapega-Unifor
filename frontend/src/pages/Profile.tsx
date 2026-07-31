@@ -1,24 +1,14 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Panel } from '../components/ui/Panel';
 import { Button } from '../components/ui/Button';
-import { XpBar } from '../components/ui/XpBar';
+import { XpMeter } from '../components/ui/XpBar';
+import { computeLevel } from '../utils/level';
 import { ItemCard } from '../components/item/ItemCard';
+import { ReviewCard } from '../components/item/ReviewCard';
 import { Loading, ErrorState } from '../components/ui/State';
 import { useItems, useProfile } from '../hooks/queries';
 import { useAuth } from '../context/AuthContext';
-import type { Review } from '../types';
 import styles from './Profile.module.css';
-
-/** Estrelas cheias/vazias a partir da nota (função pura de render). */
-function stars(avg: number) {
-  const full = Math.round(avg);
-  return '★★★★★'.slice(0, full) + '☆☆☆☆☆'.slice(0, 5 - full);
-}
-
-/** Nome do avaliador (pode vir populado {name} ou como matrícula). */
-function reviewerName(r: Review): string {
-  return typeof r.reviewer === 'object' ? r.reviewer.name : r.reviewer;
-}
 
 export function Profile() {
   const { id } = useParams();
@@ -40,6 +30,7 @@ function ProfileView({
   isMe: boolean;
   onLogout: () => void;
 }) {
+  const navigate = useNavigate();
   const { data: profile, loading, error, refetch } = useProfile(matricula);
   const { data: items } = useItems({ owner: matricula });
 
@@ -65,11 +56,21 @@ function ProfileView({
           </div>
         </div>
         {profile.bio && <p className={styles.bio}>{profile.bio}</p>}
-        <XpBar xp={profile.xp} />
+        <div className={styles.xpWrap}>
+          <span className={styles.xpCaption}>
+            Nível {computeLevel(profile.xp)} · {profile.xp} XP
+          </span>
+          <XpMeter xp={profile.xp} />
+        </div>
         {isMe && (
-          <Button variant="secondary" size="sm" onClick={onLogout}>
-            Sair
-          </Button>
+          <div className={styles.meActions}>
+            <Button variant="plain" size="sm" onClick={() => navigate('/meus')}>
+              Meus anúncios
+            </Button>
+            <Button variant="secondary" size="sm" onClick={onLogout}>
+              Sair
+            </Button>
+          </div>
         )}
       </Panel>
 
@@ -92,17 +93,29 @@ function ProfileView({
         <h2 className={styles.sectionTitle}>Avaliações ({profile.xpRatingCount})</h2>
         <div className={styles.reviews} style={{ marginTop: 12 }}>
           {profile.reviews.length > 0 ? (
-            profile.reviews.map((r) => (
-              <Panel key={r._id} className={styles.review}>
-                <div className={styles.reviewTop}>
-                  <span className={styles.reviewer}>{reviewerName(r)}</span>
-                  <span className={styles.stars} title={`${r.xpRating} de 5`}>
-                    {stars(r.xpRating)}
-                  </span>
-                </div>
-                {r.comment && <span className={styles.comment}>{r.comment}</span>}
-              </Panel>
-            ))
+            profile.reviews.map((r) => {
+              const itemId = typeof r.item === 'object' ? r.item._id : r.item;
+              return (
+                <ReviewCard
+                  key={r._id}
+                  review={r}
+                  showItem
+                  actions={
+                    <>
+                      <Button size="sm" variant="secondary" onClick={() => navigate(`/review/${r._id}`)}>
+                        Ver
+                      </Button>
+                      {/* avaliações no MEU perfil são sobre mim → posso avaliar de volta */}
+                      {isMe && (
+                        <Button size="sm" variant="primary" onClick={() => navigate(`/avaliar/${itemId}`)}>
+                          Avaliar de volta
+                        </Button>
+                      )}
+                    </>
+                  }
+                />
+              );
+            })
           ) : (
             <span className={styles.comment}>Ainda sem avaliações.</span>
           )}

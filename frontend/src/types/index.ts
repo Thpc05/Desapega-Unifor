@@ -40,7 +40,7 @@ export interface Item {
   images: ItemImage[];
   status: ItemStatus;
   owner: string | OwnerRef; // string quando não populado; OwnerRef nas listagens/detalhe
-  buyer?: string | null;
+  buyer?: string | UserRef | null; // populado {name} no detalhe quando concluído
   concludedAt?: string;
   createdAt?: string;
   updatedAt?: string;
@@ -63,8 +63,8 @@ export interface Review {
   _id: string;
   visibility: 'public' | 'private';
   item: string | { _id: string; title: string };
-  reviewer: string | { name: string };
-  reviewee: string;
+  reviewer: string | UserRef; // populado {_id, name}
+  reviewee: string | UserRef;
   xpRating: number;
   comment?: string;
   createdAt?: string;

@@ -5,6 +5,7 @@ import { Button } from '../components/ui/Button';
 import { Price } from '../components/ui/Price';
 import { CategoryIcon } from '../components/ui/CategoryIcon';
 import { XpBadge } from '../components/ui/XpBar';
+import { Icon } from '../components/ui/Icon';
 import { Loading, ErrorState } from '../components/ui/State';
 import { useItem } from '../hooks/queries';
 import { useAuth } from '../context/AuthContext';
@@ -48,8 +49,14 @@ export function ItemDetail() {
 
   return (
     <div className={styles.page}>
-      <Button className={styles.back} variant="ghost" size="sm" onClick={() => navigate(-1)}>
-        ← Voltar
+      <Button
+        className={styles.back}
+        variant="ghost"
+        size="sm"
+        icon={<Icon name="page_backward" width={26} height={15} />}
+        onClick={() => navigate(-1)}
+      >
+        Voltar
       </Button>
 
       <div className={styles.grid}>
@@ -102,7 +109,7 @@ export function ItemDetail() {
               texture="cobblestone"
               size="lg"
               fullWidth
-              icon="💬"
+              icon={<Icon name="chat" size={18} />}
               loading={sending}
               onClick={handleInterest}
             >

@@ -29,7 +29,12 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
 
 /** Estado vazio (nenhum resultado). */
 export function EmptyState({ children }: { children: React.ReactNode }) {
-  return <div className={styles.wrap}>{children}</div>;
+  return (
+    <div className={styles.wrap}>
+      <img className={styles.errIcon} src="/info.png" alt="" onError={hideBrokenImg} />
+      <span>{children}</span>
+    </div>
+  );
 }
 
 // Se a textura do bloco não existir, some com a imagem quebrada.

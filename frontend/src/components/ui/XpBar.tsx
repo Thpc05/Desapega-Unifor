@@ -12,6 +12,21 @@ export function XpBadge({ xp }: { xp: number }) {
   );
 }
 
+/**
+ * Barra de XP estilo Minecraft (sprites do jogo) com o NÍVEL no meio.
+ * Usada colada na borda inferior do card de anúncio.
+ */
+export function XpMeter({ xp }: { xp: number }) {
+  const level = computeLevel(xp);
+  const pct = Math.round(xpProgress(xp) * 100);
+  return (
+    <div className={styles.meter} title={`Nível ${level} · ${xp} XP`}>
+      <div className={styles.meterFill} style={{ width: `${pct}%` }} />
+      <span className={styles.meterLevel}>{level}</span>
+    </div>
+  );
+}
+
 /** Barra completa (perfil): nível + progresso até o próximo. */
 export function XpBar({ xp }: { xp: number }) {
   const level = computeLevel(xp);

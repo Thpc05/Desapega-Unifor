@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Panel } from '../ui/Panel';
 import { Price } from '../ui/Price';
 import { CategoryIcon } from '../ui/CategoryIcon';
-import { XpBadge } from '../ui/XpBar';
+import { XpMeter } from '../ui/XpBar';
 import type { Item } from '../../types';
 import { itemImage, ownerOf } from '../../utils/item';
 import styles from './ItemCard.module.css';
@@ -31,8 +31,12 @@ export function ItemCard({ item }: { item: Item }) {
         </div>
         <div className={styles.foot}>
           <span className={styles.seller}>por {owner?.name ?? '—'}</span>
-          <XpBadge xp={owner?.xp ?? 0} />
         </div>
+      </div>
+
+      {/* Barra de XP do vendedor, estilo Minecraft, colada na borda inferior */}
+      <div className={styles.meterSlot}>
+        <XpMeter xp={owner?.xp ?? 0} />
       </div>
     </Panel>
   );

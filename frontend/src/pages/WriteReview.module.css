@@ -1,0 +1,53 @@
+.page {
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.target {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.avatar {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  font-size: 1.3rem;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.targetMeta {
+  display: flex;
+  flex-direction: column;
+}
+.targetName {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.targetSub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.blockLabel {
+  font-weight: 700;
+}
+.visRow {
+  display: flex;
+  gap: 8px;
+}

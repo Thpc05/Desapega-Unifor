@@ -63,8 +63,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  border-top: 1px solid var(--border);
-  padding-top: 8px;
   font-size: 0.78rem;
   color: var(--text-muted);
 }
@@ -72,4 +70,9 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* barra de XP full-bleed: cancela o padding (8px) do card e cola nas bordas */
+.meterSlot {
+  margin: 6px -8px -8px;
 }

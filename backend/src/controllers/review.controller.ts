@@ -18,4 +18,14 @@ export const reviewController = {
       next(err);
     }
   },
+
+  // GET /api/item/:id/reviews  -> avaliações do negócio (público)
+  async list(req: Request, res: Response, next: NextFunction) {
+    try {
+      const reviews = await reviewService.listForItem(req.params.id);
+      res.json(reviews);
+    } catch (err) {
+      next(err);
+    }
+  },
 };

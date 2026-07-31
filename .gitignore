@@ -16,6 +16,7 @@ npm-debug.log*
 
 # Sistema operacional / editor
 .DS_Store
+.claude
 .vscode/*
 !.vscode/extensions.json
 

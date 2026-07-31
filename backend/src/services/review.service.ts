@@ -75,6 +75,14 @@ export const reviewService = {
 
     return { review, grantedXp: grantsXp };
   },
+
+  /** Avaliações de um negócio (0 a 2), com os nomes das partes. */
+  async listForItem(itemId: string) {
+    return Review.find({ item: itemId })
+      .populate('reviewer', 'name')
+      .populate('reviewee', 'name')
+      .sort({ createdAt: -1 });
+  },
 };
 
 async function hadRecentDealBetween(

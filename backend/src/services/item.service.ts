@@ -74,7 +74,9 @@ export const itemService = {
    * comparam `owner` como matrícula (string) — popular ali quebraria a comparação.
    */
   async findByIdPopulated(id: string) {
-    return Item.findById(id).populate('owner', 'name xp avgXpRating course semester bio');
+    return Item.findById(id)
+      .populate('owner', 'name xp avgXpRating course semester bio')
+      .populate('buyer', 'name'); // null se não concluído/doação
   },
 
   async update(id: string, data: Partial<IItem>) {

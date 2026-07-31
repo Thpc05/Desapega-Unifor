@@ -10,6 +10,8 @@ import { MyItems } from './pages/MyItems';
 import { Profile } from './pages/Profile';
 import { Inbox } from './pages/Inbox';
 import { Chat } from './pages/Chat';
+import { ReadReview } from './pages/ReadReview';
+import { WriteReview } from './pages/WriteReview';
 import { NotFound } from './pages/NotFound';
 import { StyleGuide } from './pages/StyleGuide';
 
@@ -29,12 +31,14 @@ export default function App() {
           <Route index element={<Landing />} />
           <Route path="item/:id" element={<ItemDetail />} />
           <Route path="perfil/:id" element={<Profile />} />
+          <Route path="review/:reviewId" element={<ReadReview />} />
           <Route path="style" element={<StyleGuide />} />
 
           {/* protegidas (exigem login) */}
           <Route element={<ProtectedRoute />}>
             <Route path="anunciar" element={<NewItem />} />
             <Route path="meus" element={<MyItems />} />
+            <Route path="avaliar/:itemId" element={<WriteReview />} />
             <Route path="chat" element={<Inbox />} />
             <Route path="chat/:id" element={<Chat />} />
           </Route>
