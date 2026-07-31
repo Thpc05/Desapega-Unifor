@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { itemController } from '../controllers/item.controller';
 import { validate } from '../middlewares/validate.middleware';
-import { authRequired } from '../middlewares/auth.middleware';
+import { authRequired, authOptional } from '../middlewares/auth.middleware';
 import {
   createItemSchema,
   updateItemSchema,
@@ -46,8 +46,8 @@ router.delete('/:id', authRequired, validate(itemIdSchema), itemController.remov
 // Concluir negócio (aplica XP + históricos).
 router.post('/:id/conclude', authRequired, validate(concludeItemSchema), itemController.conclude);
 
-// Listar as avaliações de um negócio (público).
-router.get('/:id/reviews', validate(itemIdSchema), reviewController.list);
+// Listar as avaliações de um negócio (público; privadas só p/ participantes → authOptional).
+router.get('/:id/reviews', authOptional, validate(itemIdSchema), reviewController.list);
 
 // Avaliar a contraparte de uma venda concluída.
 router.post('/:id/reviews', authRequired, validate(createReviewSchema), reviewController.create);

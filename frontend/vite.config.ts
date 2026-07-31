@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: 'autoUpdate', // atualiza o app em segundo plano quando há versão nova
       injectRegister: 'auto', // injeta o registro do SW (sem código manual)
       manifest: {
-        name: 'Desapego Unifor',
-        short_name: 'Desapego',
-        description: 'A economia circular do campus — anuncie, doe ou venda por esmeraldas.',
+        name: 'Hmm',
+        short_name: 'Hmm',
+        description: 'Hmmarket — a economia circular da vila. Anuncie, doe ou venda por esmeraldas.',
         lang: 'pt-BR',
         theme_color: '#17130d',
         background_color: '#17130d',

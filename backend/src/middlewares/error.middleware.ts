@@ -31,15 +31,19 @@ export const errorHandler = (
   _next: NextFunction,
 ) => {
   const status = err.status ?? 500; // ?? = "se for null/undefined, usa 500"
-  const message = err.message ?? 'Internal server error';
 
-  // Loga no terminal para você debugar (erros 500 são bugs nossos).
-  if (status === 500) {
+  // Loga o erro REAL no servidor (para debugar erros nossos, 5xx).
+  if (status >= 500) {
     console.error('[ERRO 500]', err);
   }
 
+  // Ao CLIENTE: só devolvemos a mensagem em erros 4xx (são intencionais e seguras
+  // — "campo faltando", "token inválido", etc.). Num 5xx a mensagem pode conter
+  // detalhes internos (Mongoose/Cloudinary), então respondemos algo genérico.
+  const clientMessage = status >= 500 ? 'Internal server error' : err.message ?? 'Error';
+
   res.status(status).json({
-    error: message,
-    ...(err.issues ? { issues: err.issues } : {}), // inclui detalhes só se existirem
+    error: clientMessage,
+    ...(err.issues ? { issues: err.issues } : {}), // detalhes de validação (400) só se existirem
   });
 };

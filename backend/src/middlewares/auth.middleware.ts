@@ -33,3 +33,22 @@ export function authRequired(req: Request, _res: Response, next: NextFunction) {
     next({ status: 401, message: 'Invalid or expired token' });
   }
 }
+
+/**
+ * AUTENTICAÇÃO OPCIONAL: usada em rotas PÚBLICAS que mostram MAIS coisas se você
+ * estiver logado (ex.: ver as próprias avaliações privadas). Se houver token
+ * válido, seta req.user; se faltar/for inválido, NÃO bloqueia — apenas segue sem
+ * usuário. Nunca responde 401.
+ */
+export function authOptional(req: Request, _res: Response, next: NextFunction) {
+  const header = req.headers.authorization;
+  if (header && header.startsWith('Bearer ')) {
+    try {
+      const payload = verifyToken(header.split(' ')[1]);
+      req.user = { id: payload.sub };
+    } catch {
+      // token inválido → segue anônimo (sem req.user), sem erro.
+    }
+  }
+  next();
+}

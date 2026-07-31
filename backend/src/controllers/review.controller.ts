@@ -19,10 +19,11 @@ export const reviewController = {
     }
   },
 
-  // GET /api/item/:id/reviews  -> avaliações do negócio (público)
+  // GET /api/item/:id/reviews  -> avaliações do negócio (público; privadas só p/ participantes)
   async list(req: Request, res: Response, next: NextFunction) {
     try {
-      const reviews = await reviewService.listForItem(req.params.id);
+      // req.user existe se veio um token válido (authOptional).
+      const reviews = await reviewService.listForItem(req.params.id, req.user?.id);
       res.json(reviews);
     } catch (err) {
       next(err);

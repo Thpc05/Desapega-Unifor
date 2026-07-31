@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { uploadImage, deleteImage } from '../utils/cloudinary';
+import { uploadImage, deleteImage, imageFolderPrefix } from '../utils/cloudinary';
 
 export const imageController = {
   // POST /api/image  -> sobe 1+ imagens e devolve [{ url, publicId }]
@@ -12,8 +12,9 @@ export const imageController = {
       }
 
       // Sobe todas em paralelo (Promise.all) e junta os resultados.
+      // A matrícula do dono (do token) vai gravada na pasta/public_id.
       const uploaded = await Promise.all(
-        files.map((file) => uploadImage(file.buffer, file.mimetype)),
+        files.map((file) => uploadImage(file.buffer, file.mimetype, req.user!.id)),
       );
 
       res.status(201).json(uploaded); // [{ url, publicId }, ...]
@@ -25,7 +26,13 @@ export const imageController = {
   // DELETE /api/image  -> apaga um upload "solto" (ex.: formulário cancelado)
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
-      await deleteImage(req.body.publicId);
+      const publicId: string = req.body.publicId;
+      // POSSE: só o dono pode apagar. O dono está gravado no próprio public_id
+      // (pasta = matrícula). Comparamos como já fazemos com item.owner === req.user.id.
+      if (!publicId.startsWith(imageFolderPrefix(req.user!.id))) {
+        return next({ status: 403, message: 'This image is not yours' });
+      }
+      await deleteImage(publicId);
       res.status(204).send();
     } catch (err) {
       next(err);

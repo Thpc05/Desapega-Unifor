@@ -136,21 +136,50 @@ export const itemService = {
     item.concludedAt = new Date();
     await item.save();
 
-    // 2) XP + histórico do VENDEDOR/DOADOR.
-    const sellerHistoryField = isSale ? 'salesHistory' : 'donationHistory';
-    await User.findByIdAndUpdate(ownerMatricula, {
-      $inc: { xp: xpForSeller(item.type, buyerIdentified) },
-      $push: { [sellerHistoryField]: item._id },
-    });
+    // ANTI-FARM (mesma regra da avaliação): se este par (vendedor↔comprador) já
+    // concluiu OUTRO negócio nos últimos 30 dias, a conclusão NÃO concede XP —
+    // impede dois amigos de "vender" um pro outro em loop só pra farmar pontos.
+    // O histórico ainda é registrado; só o XP é bloqueado.
+    const grantsXp = buyerIdentified
+      ? !(await hadRecentDealBetween(ownerMatricula, buyerMatricula!, itemId))
+      : true;
 
-    // 3) XP + histórico do COMPRADOR (só venda identificada).
+    // 2) Histórico (+ XP se permitido) do VENDEDOR/DOADOR.
+    const sellerHistoryField = isSale ? 'salesHistory' : 'donationHistory';
+    const sellerUpdate: Record<string, unknown> = { $push: { [sellerHistoryField]: item._id } };
+    if (grantsXp) sellerUpdate.$inc = { xp: xpForSeller(item.type, buyerIdentified) };
+    await User.findByIdAndUpdate(ownerMatricula, sellerUpdate);
+
+    // 3) Histórico (+ XP se permitido) do COMPRADOR (só venda identificada).
     if (buyerIdentified) {
-      await User.findByIdAndUpdate(buyerMatricula, {
-        $inc: { xp: xpForBuyer(item.type, buyerIdentified) },
-        $push: { purchaseHistory: item._id },
-      });
+      const buyerUpdate: Record<string, unknown> = { $push: { purchaseHistory: item._id } };
+      if (grantsXp) buyerUpdate.$inc = { xp: xpForBuyer(item.type, buyerIdentified) };
+      await User.findByIdAndUpdate(buyerMatricula, buyerUpdate);
     }
 
     return item;
   },
 };
+
+/**
+ * Houve OUTRO negócio concluído entre esse par nos últimos 30 dias?
+ * (Mesma janela anti-farm usada na avaliação — ver review.service.)
+ */
+const ANTI_FARM_DAYS = 30;
+async function hadRecentDealBetween(
+  userA: string,
+  userB: string,
+  currentItemId: string,
+): Promise<boolean> {
+  const since = new Date(Date.now() - ANTI_FARM_DAYS * 24 * 60 * 60 * 1000);
+  const other = await Item.findOne({
+    _id: { $ne: currentItemId },
+    status: 'concluded',
+    concludedAt: { $gte: since },
+    $or: [
+      { owner: userA, buyer: userB },
+      { owner: userB, buyer: userA },
+    ],
+  });
+  return other !== null;
+}

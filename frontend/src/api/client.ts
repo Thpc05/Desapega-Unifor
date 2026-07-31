@@ -19,7 +19,7 @@ export const api = axios.create({
 
 /* ---------- Token: onde guardamos e como lemos ---------- */
 
-const TOKEN_KEY = 'desapego_token';
+const TOKEN_KEY = 'hmmarket_token';
 
 /**
  * O token fica no localStorage (persiste entre recarregamentos/abas).

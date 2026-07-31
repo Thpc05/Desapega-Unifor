@@ -38,10 +38,10 @@ export function Landing() {
     <div className={styles.page}>
       {/* Hero */}
       <Panel as="section" elevated className={styles.hero}>
-        <h1 className={styles.heroTitle}>Desapego Unifor</h1>
+        <h1 className={styles.heroTitle}>Hmm</h1>
         <p className={styles.heroSub}>
-          A economia circular do campus. Anuncie o que não usa mais, doe ou venda por
-          esmeraldas, e ajude outro estudante. ⛏
+          A economia circular da vila. Anuncie o que não usa mais, doe ou venda por
+          esmeraldas, e ajude outros villagers. ⛏
         </p>
         <div className={styles.heroActions}>
           <Button variant="plain" icon={<CraftPlus />} onClick={() => navigate('/anunciar')}>

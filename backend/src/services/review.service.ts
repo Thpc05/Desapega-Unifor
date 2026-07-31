@@ -76,9 +76,18 @@ export const reviewService = {
     return { review, grantedXp: grantsXp };
   },
 
-  /** Avaliações de um negócio (0 a 2), com os nomes das partes. */
-  async listForItem(itemId: string) {
-    return Review.find({ item: itemId })
+  /**
+   * Avaliações de um negócio (0 a 2), com os nomes das partes.
+   * PRIVACIDADE: as `public` aparecem para todos; as `private` só para quem é
+   * parte dela (reviewer ou reviewee). `requester` = matrícula de quem pede (ou
+   * undefined se anônimo).
+   */
+  async listForItem(itemId: string, requester?: string) {
+    const or: Record<string, unknown>[] = [{ visibility: 'public' }];
+    if (requester) {
+      or.push({ reviewer: requester }, { reviewee: requester });
+    }
+    return Review.find({ item: itemId, $or: or })
       .populate('reviewer', 'name avatarUrl')
       .populate('reviewee', 'name avatarUrl')
       .sort({ createdAt: -1 });

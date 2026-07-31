@@ -1,6 +1,7 @@
 import { Server as HttpServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import { verifyToken } from '../utils/jwt';
+import { corsOrigin } from '../utils/corsOrigin';
 import { conversationService } from '../services/conversation.service';
 import { messageService } from '../services/message.service';
 
@@ -40,7 +41,7 @@ export function initSocket(httpServer: HttpServer): Server {
   // Usamos os tipos padrão do Socket.io (permitem qualquer evento). A matrícula do
   // usuário guardamos em socket.data e lemos via getUserId().
   io = new Server(httpServer, {
-    cors: { origin: '*' }, // em produção, restringir à origem do front
+    cors: { origin: corsOrigin() }, // mesma regra do Express (via CORS_ORIGIN)
   });
 
   /**

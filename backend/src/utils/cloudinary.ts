@@ -32,12 +32,21 @@ export interface UploadedImage {
 export async function uploadImage(
   buffer: Buffer,
   mimetype: string,
+  ownerMatricula: string,
 ): Promise<UploadedImage> {
   const dataUri = `data:${mimetype};base64,${buffer.toString('base64')}`;
+  // A matrícula do dono vai na PASTA → fica gravada dentro do public_id
+  // (ex.: "desapego/items/2312345/abc123"). É assim que a imagem "guarda" quem a
+  // criou, sem precisar de uma coleção nova: o próprio id carrega o dono.
   const result = await cloudinary.uploader.upload(dataUri, {
-    folder: 'desapego/items',
+    folder: `desapego/items/${ownerMatricula}`,
   });
   return { url: result.secure_url, publicId: result.public_id };
+}
+
+/** Prefixo do public_id de um usuário — usado para checar posse na hora de deletar. */
+export function imageFolderPrefix(ownerMatricula: string): string {
+  return `desapego/items/${ownerMatricula}/`;
 }
 
 /**

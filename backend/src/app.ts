@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import { corsOrigin } from './utils/corsOrigin';
 import itemRoutes from './routes/item.routes';
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
@@ -19,7 +20,10 @@ import { errorHandler } from './middlewares/error.middleware';
  */
 const app = express();
 
-app.use(cors());
+// Estamos atrás de um proxy (Render) → confia no 1º hop para o rate-limit ver o IP real.
+app.set('trust proxy', 1);
+
+app.use(cors({ origin: corsOrigin() }));
 app.use(express.json());
 
 // Rota de "saúde": um jeito rápido de testar se a API está no ar.
