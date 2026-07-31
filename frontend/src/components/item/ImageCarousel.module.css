@@ -1,0 +1,119 @@
+.wrap {
+  position: relative;
+  width: 100%;
+}
+
+.frame {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  display: block;
+  background: var(--surface-2);
+  cursor: zoom-in;
+}
+.placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+/* setas sobrepostas (sprite join) */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.nav:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+.prev {
+  left: 6px;
+}
+.next {
+  right: 6px;
+}
+.arrow {
+  width: 26px;
+  height: 26px;
+  image-rendering: pixelated;
+}
+.arrowFlip {
+  transform: scaleX(-1);
+}
+
+/* contador + dots */
+.counter {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--border);
+  padding: 1px 7px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-3);
+  cursor: pointer;
+  padding: 0;
+}
+.dotOn {
+  background: var(--green);
+}
+
+/* lightbox (foco) */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.9);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  cursor: zoom-out;
+}
+.big {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  cursor: default;
+}
+.close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.closeIcon {
+  width: 20px;
+  height: 20px;
+  image-rendering: pixelated;
+}
+.lightNav {
+  width: 52px;
+  height: 60px;
+}

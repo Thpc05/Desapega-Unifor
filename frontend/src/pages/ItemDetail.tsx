@@ -7,12 +7,13 @@ import { CategoryIcon } from '../components/ui/CategoryIcon';
 import { XpBadge } from '../components/ui/XpBar';
 import { Icon } from '../components/ui/Icon';
 import { Avatar } from '../components/ui/Avatar';
+import { ImageCarousel } from '../components/item/ImageCarousel';
 import { Loading, ErrorState } from '../components/ui/State';
 import { useItem } from '../hooks/queries';
 import { useAuth } from '../context/AuthContext';
 import { itemsApi } from '../api/items.api';
 import { apiErrorMessage } from '../api/client';
-import { itemImage, ownerOf } from '../utils/item';
+import { ownerOf } from '../utils/item';
 import styles from './ItemDetail.module.css';
 
 export function ItemDetail() {
@@ -28,7 +29,6 @@ export function ItemDetail() {
   if (!item) return null;
 
   const owner = ownerOf(item);
-  const img = itemImage(item);
   const isMine = user && owner && user.matricula === owner._id;
 
   async function handleInterest() {
@@ -62,11 +62,7 @@ export function ItemDetail() {
 
       <div className={styles.grid}>
         <Panel elevated style={{ padding: 8 }}>
-          {img ? (
-            <img className={`${styles.photo} pixel`} src={img} alt={item.title} />
-          ) : (
-            <div className={styles.photo} />
-          )}
+          <ImageCarousel images={item.images} alt={item.title} />
         </Panel>
 
         <Panel elevated className={styles.info}>
