@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Panel } from '../components/ui/Panel';
 import { Button } from '../components/ui/Button';
 import { Textarea } from '../components/ui/Field';
@@ -59,11 +59,14 @@ export function WriteReview() {
       <div className={styles.page}>
         <Panel padded>
           <p>Você já avaliou este negócio. ✅</p>
-          <Link to={`/review/${alreadyMine._id}`}>
-            <Button variant="secondary" style={{ marginTop: 12 }}>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
+            <Button variant="primary" onClick={() => navigate(`/review/${alreadyMine._id}`)}>
               Ver minha avaliação
             </Button>
-          </Link>
+            <Button variant="secondary" onClick={() => navigate('/perfil/me')}>
+              Voltar ao perfil
+            </Button>
+          </div>
         </Panel>
       </div>
     );

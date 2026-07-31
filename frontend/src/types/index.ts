@@ -28,6 +28,7 @@ export interface OwnerRef {
   course?: string;
   semester?: number;
   bio?: string;
+  avatarUrl?: string;
 }
 
 export interface Item {
@@ -89,10 +90,11 @@ export interface PublicProfile {
   reviews: Review[];
 }
 
-/** Referência a um usuário populado (só _id + nome). */
+/** Referência a um usuário populado (só _id + nome + foto). */
 export interface UserRef {
   _id: string;
   name: string;
+  avatarUrl?: string;
 }
 
 export interface Conversation {

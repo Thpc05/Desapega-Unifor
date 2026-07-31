@@ -151,7 +151,7 @@ function ProfileView({
                       {/* avaliações no MEU perfil são sobre mim → posso avaliar de volta */}
                       {isMe && (
                         <Button size="sm" variant="primary" onClick={() => navigate(`/avaliar/${itemId}`)}>
-                          Avaliar de volta
+                          Avaliar
                         </Button>
                       )}
                     </>

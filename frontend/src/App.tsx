@@ -6,6 +6,7 @@ import { ItemDetail } from './pages/ItemDetail';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { NewItem } from './pages/NewItem';
+import { EditItem } from './pages/EditItem';
 import { MyItems } from './pages/MyItems';
 import { Profile } from './pages/Profile';
 import { Inbox } from './pages/Inbox';
@@ -37,6 +38,7 @@ export default function App() {
           {/* protegidas (exigem login) */}
           <Route element={<ProtectedRoute />}>
             <Route path="anunciar" element={<NewItem />} />
+            <Route path="editar/:itemId" element={<EditItem />} />
             <Route path="meus" element={<MyItems />} />
             <Route path="avaliar/:itemId" element={<WriteReview />} />
             <Route path="chat" element={<Inbox />} />

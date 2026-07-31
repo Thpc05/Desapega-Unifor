@@ -6,6 +6,7 @@ import { Price } from '../components/ui/Price';
 import { CategoryIcon } from '../components/ui/CategoryIcon';
 import { XpBadge } from '../components/ui/XpBar';
 import { Icon } from '../components/ui/Icon';
+import { Avatar } from '../components/ui/Avatar';
 import { Loading, ErrorState } from '../components/ui/State';
 import { useItem } from '../hooks/queries';
 import { useAuth } from '../context/AuthContext';
@@ -82,7 +83,7 @@ export function ItemDetail() {
 
           {owner && (
             <Panel as={Link} to={`/perfil/${owner._id}`} interactive className={styles.seller}>
-              <span className={styles.avatar}>{owner.name.charAt(0)}</span>
+              <Avatar url={owner.avatarUrl} name={owner.name} size={44} />
               <span className={styles.sellerMeta}>
                 <span className={styles.sellerName}>{owner.name}</span>
                 {owner.course && (
@@ -101,9 +102,16 @@ export function ItemDetail() {
           {actionError && <ErrorState message={actionError} />}
 
           {isMine ? (
-            <Button variant="secondary" size="lg" fullWidth onClick={() => navigate('/meus')}>
-              Gerenciar meu anúncio
-            </Button>
+            <>
+              {item.status !== 'concluded' && (
+                <Button variant="primary" size="lg" fullWidth onClick={() => navigate(`/editar/${item._id}`)}>
+                  Editar anúncio
+                </Button>
+              )}
+              <Button variant="secondary" size="lg" fullWidth onClick={() => navigate('/meus')}>
+                Gerenciar meu anúncio
+              </Button>
+            </>
           ) : (
             <Button
               texture="cobblestone"

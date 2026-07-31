@@ -4,6 +4,7 @@ import { Panel } from '../components/ui/Panel';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Field';
 import { Icon } from '../components/ui/Icon';
+import { Avatar } from '../components/ui/Avatar';
 import { Loading, ErrorState } from '../components/ui/State';
 import { useMessages, useInbox } from '../hooks/queries';
 import { useChatSocket } from '../hooks/useChatSocket';
@@ -46,16 +47,15 @@ export function Chat() {
     threadRef.current?.scrollTo({ top: threadRef.current.scrollHeight });
   }, [messages]);
 
-  // Cabeçalho: acha a conversa no inbox pra mostrar nome do outro + título do item.
+  // Cabeçalho: acha a conversa no inbox pra mostrar o outro participante + item.
   const convo = inbox.data?.find((c) => c._id === id);
-  const nameOf = (u: string | UserRef | undefined) =>
-    !u ? '' : typeof u === 'object' ? u.name : u;
-  const otherName =
-    convo && user
-      ? (typeof convo.buyer === 'object' ? convo.buyer._id : convo.buyer) === user.matricula
-        ? nameOf(convo.seller)
-        : nameOf(convo.buyer)
-      : 'Conversa';
+  const otherRef: string | UserRef | null = (() => {
+    if (!convo || !user) return null;
+    const idOf = (u: string | UserRef) => (typeof u === 'object' ? u._id : u);
+    return idOf(convo.buyer) === user.matricula ? convo.seller : convo.buyer;
+  })();
+  const otherName = otherRef ? (typeof otherRef === 'object' ? otherRef.name : otherRef) : 'Conversa';
+  const otherAvatar = otherRef && typeof otherRef === 'object' ? otherRef.avatarUrl : undefined;
   const itemTitle = convo && typeof convo.item === 'object' ? convo.item.title : '';
 
   function send(e: React.FormEvent) {
@@ -80,7 +80,7 @@ export function Chat() {
           icon={<Icon name="page_backward" width={26} height={15} />}
           onClick={() => navigate('/chat')}
         />
-        <span className={styles.avatar}>{(otherName || '?').charAt(0)}</span>
+        <Avatar url={otherAvatar} name={otherName} size={40} />
         <div className={styles.hMeta}>
           <span className={styles.hName}>{otherName}</span>
           {itemTitle && <span className={styles.hItem}>{itemTitle}</span>}

@@ -29,7 +29,7 @@ export const userService = {
     // Só avaliações públicas aparecem no perfil.
     const reviews = await Review.find({ reviewee: matricula, visibility: 'public' })
       .sort({ createdAt: -1 })
-      .populate('reviewer', 'name') // troca a matrícula do reviewer pelos dados básicos
+      .populate('reviewer', 'name avatarUrl') // troca a matrícula do reviewer pelos dados básicos
       .populate('item', 'title');
 
     return {

@@ -39,8 +39,8 @@ export const conversationService = {
       .sort({ lastMessageAt: -1, createdAt: -1 })
       .populate('item', 'title status')
       // nomes das duas partes → a UI mostra o nome do "outro" sem request extra
-      .populate('buyer', 'name')
-      .populate('seller', 'name');
+      .populate('buyer', 'name avatarUrl')
+      .populate('seller', 'name avatarUrl');
   },
 
   /**

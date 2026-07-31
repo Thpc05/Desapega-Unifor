@@ -133,6 +133,9 @@ export function MyItems() {
                       )
                     ) : (
                       <>
+                        <Button size="sm" variant="secondary" onClick={() => navigate(`/editar/${item._id}`)}>
+                          Editar
+                        </Button>
                         <Button
                           size="sm"
                           icon={<Icon name="checkmark" size={13} />}

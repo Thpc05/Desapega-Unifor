@@ -1,0 +1,16 @@
+.avatar {
+  display: grid;
+  place-items: center;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  font-weight: 900;
+  flex-shrink: 0;
+  overflow: hidden;
+  color: var(--text);
+  line-height: 1;
+}
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

@@ -45,7 +45,7 @@ export const itemService = {
     if (filters.owner) query.owner = filters.owner;
     // populate('owner', ...) troca a matrícula do dono pelos campos escolhidos
     // (nome, XP, nota) — o card da vitrine precisa disso sem um 2º request por item.
-    return Item.find(query).sort({ createdAt: -1 }).populate('owner', 'name xp avgXpRating');
+    return Item.find(query).sort({ createdAt: -1 }).populate('owner', 'name xp avgXpRating avatarUrl');
   },
 
   /** Anúncios ATIVOS do usuário (disponível/reservado) — tela "Meus anúncios". */
@@ -75,7 +75,7 @@ export const itemService = {
    */
   async findByIdPopulated(id: string) {
     return Item.findById(id)
-      .populate('owner', 'name xp avgXpRating course semester bio')
+      .populate('owner', 'name xp avgXpRating course semester bio avatarUrl')
       .populate('buyer', 'name'); // null se não concluído/doação
   },
 

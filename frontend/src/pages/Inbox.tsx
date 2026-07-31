@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Panel } from '../components/ui/Panel';
+import { Avatar } from '../components/ui/Avatar';
 import { Loading, ErrorState, EmptyState } from '../components/ui/State';
 import { useInbox } from '../hooks/queries';
 import { useAuth } from '../context/AuthContext';
@@ -7,11 +8,11 @@ import type { Conversation, UserRef } from '../types';
 
 import styles from './Inbox.module.css';
 
-/** Nome do "outro" participante (não eu) — buyer/seller vêm populados {name}. */
-function otherName(c: Conversation, myId: string | undefined): string {
+/** O "outro" participante (não eu) — buyer/seller vêm populados {name, avatarUrl}. */
+function otherParty(c: Conversation, myId: string | undefined): { name: string; avatarUrl?: string } {
   const idOf = (u: string | UserRef) => (typeof u === 'object' ? u._id : u);
   const other = idOf(c.buyer) === myId ? c.seller : c.buyer;
-  return typeof other === 'object' ? other.name : other;
+  return typeof other === 'object' ? { name: other.name, avatarUrl: other.avatarUrl } : { name: other };
 }
 function itemTitle(c: Conversation): string {
   return typeof c.item === 'object' ? c.item.title : '';
@@ -31,12 +32,12 @@ export function Inbox() {
       {conversations && conversations.length > 0 ? (
         <div className={styles.list}>
           {conversations.map((c) => {
-            const name = otherName(c, user?.matricula);
+            const other = otherParty(c, user?.matricula);
             return (
               <Panel key={c._id} as={Link} to={`/chat/${c._id}`} interactive className={styles.row}>
-                <span className={styles.avatar}>{name.charAt(0)}</span>
+                <Avatar url={other.avatarUrl} name={other.name} size={46} />
                 <div className={styles.meta}>
-                  <span className={styles.name}>{name}</span>
+                  <span className={styles.name}>{other.name}</span>
                   <span className={styles.item}>{itemTitle(c)}</span>
                   {c.lastMessagePreview && <span className={styles.preview}>{c.lastMessagePreview}</span>}
                 </div>

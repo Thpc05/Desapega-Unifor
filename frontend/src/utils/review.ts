@@ -12,6 +12,11 @@ export function refId(ref: string | UserRef | null | undefined): string {
   return typeof ref === 'object' ? ref._id : ref;
 }
 
+/** Foto de uma referência de usuário (se populada). */
+export function refAvatar(ref: string | UserRef | null | undefined): string | undefined {
+  return ref && typeof ref === 'object' ? ref.avatarUrl : undefined;
+}
+
 /** _id de uma review = `<itemId>r<matrícula_do_avaliador>` (convenção do backend). */
 export function makeReviewId(itemId: string, reviewer: string): string {
   return `${itemId}r${reviewer}`;

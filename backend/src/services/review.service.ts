@@ -79,8 +79,8 @@ export const reviewService = {
   /** Avaliações de um negócio (0 a 2), com os nomes das partes. */
   async listForItem(itemId: string) {
     return Review.find({ item: itemId })
-      .populate('reviewer', 'name')
-      .populate('reviewee', 'name')
+      .populate('reviewer', 'name avatarUrl')
+      .populate('reviewee', 'name avatarUrl')
       .sort({ createdAt: -1 });
   },
 };
