@@ -11,7 +11,7 @@
 - **Autor:** `Theo Passos` — Matrícula `2416515`
 - **App (frontend, Vercel):** `https://hmmarket.vercel.app/`
 - **API (backend, Render):** `https://desapega-unifor.onrender.com`
-- **Vídeo de apresentação (6 min):** `https://drive.google.com/drive/folders/1YImLln-9pZDttZZubDbqHUs_1kma4awf?hl=pt-br`
+- **Vídeo de apresentação (6 min):** `https://drive.google.com/file/d/1TmpuTwZKEWCnzUNhukgmEteXmcqQfFGb/view?usp=drivesdk`
 
 ---
 
