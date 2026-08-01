@@ -8,14 +8,10 @@
 
 ---
 
-## ✏️ Preencher (autor)
-
-> Estes campos dependem de você — preencha antes de entregar:
-
-- **Autor:** `<preencher: nome>` — Matrícula `<preencher>`
-- **App (frontend, Vercel):** `<preencher: https://...>`
-- **API (backend, Render):** `<preencher: https://...>`
-- **Vídeo de apresentação (6 min):** `<preencher: link do vídeo>`
+- **Autor:** `Theo Passos` — Matrícula `2416515`
+- **App (frontend, Vercel):** `https://hmmarket.vercel.app/`
+- **API (backend, Render):** `https://desapega-unifor.onrender.com`
+- **Vídeo de apresentação (6 min):** `https://drive.google.com/drive/folders/1YImLln-9pZDttZZubDbqHUs_1kma4awf?hl=pt-br`
 
 ---
 
@@ -108,7 +104,7 @@ npm run dev               # abre em http://localhost:5173
 ├── backend/      # API REST + Socket.io (routes → controllers → services → models)
 ├── frontend/     # SPA React + PWA
 ├── DIARIO_DE_BORDO.md      # Diário de Bordo da IA (como a IA foi usada)
-├── HISTORICO_CONVERSA.md   # link público do chat de desenvolvimento
+├── Historico.md            # transcrição completa do chat de desenvolvimento
 └── README.md
 ```
 
